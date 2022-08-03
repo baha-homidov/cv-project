@@ -1,0 +1,20 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+
+.output-info {
+  padding: 20px;
+  padding-left: 0;
+}
+
+div.container {
+  box-shadow: 1px 1px 5px #283f6290;
+  padding: 20px;
+  border: 1px solid blue;
+}
+
+div.education > div.education-entry {
+  display: flex;
+}

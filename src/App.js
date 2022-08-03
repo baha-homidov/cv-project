@@ -1,6 +1,6 @@
 import React from "react";
 import { OutputInfo } from "./components/OutputInfo";
-import "./App.css";
+import "./styles/App.css";
 
 class App extends React.Component {
   constructor(props) {
@@ -180,8 +180,8 @@ class App extends React.Component {
           </h1>
           <form className="input-form">
             <div className="general-info">
-              <h2>General Info</h2>
-              <label>
+              <h2 className="general-info-header">General Info</h2>
+              <label className="name">
                 Name
                 <input
                   type="text"
@@ -189,7 +189,7 @@ class App extends React.Component {
                   onChange={this.handleName}
                 />
               </label>
-              <label>
+              <label className="title">
                 Title
                 <input
                   type="text"
@@ -197,14 +197,14 @@ class App extends React.Component {
                   onChange={this.handleTitle}
                 />
               </label>
-              <label>
+              <label className="phone-number">
                 Phone number{" "}
                 <input
                   value={this.state.phoneNumber}
                   onChange={this.handlePhoneNumber}
                 />
               </label>
-              <label>
+              <label className="email">
                 Email{" "}
                 <input
                   type="text"
@@ -214,10 +214,11 @@ class App extends React.Component {
               </label>
             </div>
             <div className="eduaction">
+              <h2 className="education-title">Education</h2>
               {this.state.educationExperience.map((item, index) => {
                 return (
                   <div className="education-entry" key={index}>
-                    <label>
+                    <label className="name">
                       School Name
                       <input
                         type="text"
@@ -225,7 +226,7 @@ class App extends React.Component {
                         onChange={(e) => this.handleEducationName(e, index)}
                       />
                     </label>
-                    <label>
+                    <label className="title">
                       Title of Study
                       <input
                         type="text"
@@ -233,7 +234,7 @@ class App extends React.Component {
                         onChange={(e) => this.handleEducationTitle(e, index)}
                       />
                     </label>
-                    <label>
+                    <label className="start-date">
                       Start Date{" "}
                       <input
                         value={item.startDate}
@@ -243,7 +244,7 @@ class App extends React.Component {
                         }
                       />
                     </label>
-                    <label>
+                    <label className="graduation-date">
                       Graduation Date{" "}
                       <input
                         type="month"
@@ -263,17 +264,18 @@ class App extends React.Component {
                 );
               })}
               <button
-                className="add-education-entry"
+                className="add-entry"
                 onClick={this.addEducationEntry}
               >
                 Add Entry
               </button>
             </div>
             <div className="experience">
+              <h2 className="experience-title">Work Experience</h2>
               {this.state.workExperience.map((item, index) => {
                 return (
                   <div className="experience-entry" key={index}>
-                    <label>
+                    <label className="name">
                       Company Name
                       <input
                         type="text"
@@ -281,7 +283,7 @@ class App extends React.Component {
                         onChange={(e) => this.handleWorkName(e, index)}
                       />
                     </label>
-                    <label>
+                    <label className="title">
                       Title
                       <input
                         type="text"
@@ -289,16 +291,16 @@ class App extends React.Component {
                         onChange={(e) => this.handleWorkTitle(e, index)}
                       />
                     </label>
-                    <label>
+                    <label className="main-tasks">
                       Main Tasks
                       <textarea
                         cols="30"
-                        rows="10"
+                        rows="5"
                         value={item.mainTasks}
                         onChange={(e) => this.handleWorkTasks(e, index)}
                       ></textarea>
                     </label>
-                    <label>
+                    <label className="start-date">
                       Start Date
                       <input
                         value={item.startDate}
@@ -308,8 +310,8 @@ class App extends React.Component {
                         }
                       />
                     </label>
-                    <label>
-                      Graduation Date
+                    <label className="end-date">
+                      End Date
                       <input
                         type="month"
                         value={item.endDate}
@@ -328,7 +330,7 @@ class App extends React.Component {
                 );
               })}
               <button
-                className="add-education-entry"
+                className="add-entry"
                 onClick={this.addExperienceEntry}
               >
                 Add Entry
