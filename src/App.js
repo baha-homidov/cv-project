@@ -1,107 +1,82 @@
-import React from "react";
+import React, { useState} from "react";
 import { OutputInfo } from "./components/OutputInfo";
 import "./styles/App.css";
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      name: "John Doe",
+function App(props) {
+  const [name, setName] = useState("John Doe");
+  const [title, setTitle] = useState("Software Engineer");
+  const [phoneNumber, setPhoneNumber] = useState("+992-92-999-99-99");
+  const [email, setEmail] = useState("email@example.com");
+  const [educationExperience, setEducationExperience] = useState([
+    {
+      schoolName: "Stanford University",
+      title: "Computer Science",
+      startDate: "2014-09",
+      graduationDate: "2019-07",
+    },
+  ]);
+  const [workExperience, setWorkExperience] = useState([
+    {
+      companyName: "Microsoft",
       title: "Software Engineer",
-      phoneNumber: "+992-92-999-99-99",
-      email: "email@example.com",
-      educationExperienceNum: 1, // initial number of entries
-      educationExperience: [
-        {
-          schoolName: "Stanford University",
-          title: "Computer Science",
-          startDate: "2014-09",
-          graduationDate: "2019-07",
-        },
-      ],
-      workExperience: [
-        {
-          companyName: "Microsoft",
-          title: "Software Engineer",
-          mainTasks: "Some Tasks",
-          startDate: "2020-01",
-          endDate: "2022-03",
-        },
-      ],
-    };
-    this.handleName = this.handleName.bind(this);
-    this.handleTitle = this.handleTitle.bind(this);
-    this.handlePhoneNumber = this.handlePhoneNumber.bind(this);
-    this.handleEmail = this.handleEmail.bind(this);
+      mainTasks: "Some Tasks",
+      startDate: "2020-01",
+      endDate: "2022-03",
+    },
+  ]);
 
-    // schoolExperience helper methods
-    this.handleEducationName = this.handleEducationName.bind(this);
-    this.handleEducationTitle = this.handleEducationTitle.bind(this);
-    this.handleEducationStartDate = this.handleEducationStartDate.bind(this);
-    this.handleEducationGraduationDate =
-      this.handleEducationGraduationDate.bind(this);
-    this.addEducationEntry = this.addEducationEntry.bind(this);
-    this.deleteEducationEntry = this.deleteEducationEntry.bind(this);
-
-    // workExperience helper methods
-    this.handleWorkName = this.handleWorkName.bind(this);
-    this.handleWorkTitle = this.handleWorkTitle.bind(this);
-    this.handleWorkTasks = this.handleWorkTasks.bind(this);
-    this.handleWorkStartDate = this.handleWorkStartDate.bind(this);
-    this.handleWorkEndDate = this.handleWorkEndDate.bind(this);
-    this.addExperienceEntry = this.addExperienceEntry.bind(this);
-    this.deleteExperienceEntry = this.deleteExperienceEntry.bind(this);
+  function handleName(e) {
+    setName(e.target.value);
   }
 
-  handleName(e) {
-    this.setState({
-      name: e.target.value,
-    });
+  function handleTitle(e) {
+    setTitle(e.target.value);
   }
 
-  handleTitle(e) {
-    this.setState({
-      title: e.target.value,
-    });
-    console.log(this.state.title);
+  function handlePhoneNumber(e) {
+    setPhoneNumber(e.target.value);
   }
 
-  handlePhoneNumber(e) {
-    this.setState({ phoneNumber: e.target.value });
-    console.log(this.state);
+  function handleEmail(e) {
+    setEmail(e.target.value);
   }
 
-  handleEmail(e) {
-    this.setState({ email: e.target.value });
-  }
+  // education helper functions
 
-  handleEducationName(e, index) {
-    const newArr = this.state.educationExperience.slice();
+  function handleEducationName(e, index) {
+    const newArr = educationExperience.slice();
     newArr[index].schoolName = e.target.value;
-    this.setState({ educationExperience: newArr });
+    setEducationExperience(newArr);
   }
 
-  handleEducationTitle(e, index) {
-    const newArr = this.state.educationExperience.slice();
+  function handleEducationTitle(e, index) {
+    const newArr = educationExperience.slice();
     newArr[index].title = e.target.value;
-    this.setState({ educationExperience: newArr });
+    setEducationExperience(newArr);
   }
 
-  handleEducationStartDate(e, index) {
-    const newArr = this.state.educationExperience.slice();
+  function handleEducationStartDate(e, index) {
+    const newArr = educationExperience.slice();
     newArr[index].startDate = e.target.value;
-    this.setState({ educationExperience: newArr });
+    setEducationExperience(newArr);
   }
 
-  handleEducationGraduationDate(e, index) {
-    const newArr = this.state.educationExperience.slice();
+  function handleEducationGraduationDate(e, index) {
+    const newArr = educationExperience.slice();
     newArr[index].graduationDate = e.target.value;
-    this.setState({ educationExperience: newArr });
+    setEducationExperience(newArr);
   }
 
-  addEducationEntry(e) {
+  function deleteEducationEntry(e, index) {
     e.preventDefault();
-    const newArr = this.state.educationExperience.slice();
+    const newArr = educationExperience.slice();
+    newArr.splice(index, 1);
+    setEducationExperience(newArr);
+  }
+
+  function addEducationEntry(e) {
+    e.preventDefault();
+    const newArr = educationExperience.slice();
     newArr.push({
       schoolName: "School Name",
       title: "Title",
@@ -109,51 +84,44 @@ class App extends React.Component {
       graduationDate: "2015-07",
     });
 
-    this.setState({ educationExperience: newArr });
-  }
-
-  deleteEducationEntry(e, index) {
-    e.preventDefault();
-    const newArr = this.state.educationExperience.slice();
-    newArr.splice(index, 1);
-    this.setState({ educationExperience: newArr });
+    setEducationExperience(newArr);
   }
 
   // work Experience helper methods
 
-  handleWorkName(e, index) {
-    const newArr = this.state.workExperience.slice();
+  function handleWorkName(e, index) {
+    const newArr = workExperience.slice();
     newArr[index].companyName = e.target.value;
-    this.setState({ workExperience: newArr });
+    setWorkExperience(newArr);
   }
 
-  handleWorkTitle(e, index) {
-    const newArr = this.state.workExperience.slice();
+  function handleWorkTitle(e, index) {
+    const newArr = workExperience.slice();
     newArr[index].title = e.target.value;
-    this.setState({ workExperience: newArr });
+    setWorkExperience(newArr);
   }
 
-  handleWorkTasks(e, index) {
-    const newArr = this.state.workExperience.slice();
+  function handleWorkTasks(e, index) {
+    const newArr = workExperience.slice();
     newArr[index].mainTasks = e.target.value;
-    this.setState({ workExperience: newArr });
+    setWorkExperience(newArr);
   }
 
-  handleWorkStartDate(e, index) {
-    const newArr = this.state.workExperience.slice();
+  function handleWorkStartDate(e, index) {
+    const newArr = workExperience.slice();
     newArr[index].startDate = e.target.value;
-    this.setState({ workExperience: newArr });
+    setWorkExperience(newArr);
   }
 
-  handleWorkEndDate(e, index) {
-    const newArr = this.state.workExperience.slice();
+  function handleWorkEndDate(e, index) {
+    const newArr = workExperience.slice();
     newArr[index].endDate = e.target.value;
-    this.setState({ workExperience: newArr });
+    setWorkExperience(newArr);
   }
 
-  addExperienceEntry(e) {
+  function addExperienceEntry(e) {
     e.preventDefault();
-    const newArr = this.state.workExperience.slice();
+    const newArr = workExperience.slice();
     newArr.push({
       companyName: "Some Company",
       title: "Some Title",
@@ -161,187 +129,165 @@ class App extends React.Component {
       startDate: "2020-01",
       endDate: "2022-02",
     });
-    this.setState({ workExperience: newArr });
+    setWorkExperience(newArr);
   }
 
-  deleteExperienceEntry(e, index) {
+  function deleteExperienceEntry(e, index) {
     e.preventDefault();
-    const newArr = this.state.workExperience.slice();
+    const newArr = workExperience.slice();
     newArr.splice(index, 1);
-    this.setState({ workExperience: newArr });
+    setWorkExperience(newArr);
   }
 
-  render() {
-    return (
-      <div className="App">
-        <div className="input-info">
-          <h1 className="header-title">
-            Input your info and get real-time results!
-          </h1>
-          <form className="input-form">
-            <div className="general-info">
-              <h2 className="general-info-header">General Info</h2>
-              <label className="name">
-                Name
-                <input
-                  type="text"
-                  value={this.state.name}
-                  onChange={this.handleName}
-                />
-              </label>
-              <label className="title">
-                Title
-                <input
-                  type="text"
-                  value={this.state.title}
-                  onChange={this.handleTitle}
-                />
-              </label>
-              <label className="phone-number">
-                Phone number{" "}
-                <input
-                  value={this.state.phoneNumber}
-                  onChange={this.handlePhoneNumber}
-                />
-              </label>
-              <label className="email">
-                Email{" "}
-                <input
-                  type="text"
-                  value={this.state.email}
-                  onChange={this.handleEmail}
-                />
-              </label>
-            </div>
-            <div className="eduaction">
-              <h2 className="education-title">Education</h2>
-              {this.state.educationExperience.map((item, index) => {
-                return (
-                  <div className="education-entry" key={index}>
-                    <label className="name">
-                      School Name
-                      <input
-                        type="text"
-                        value={item.schoolName}
-                        onChange={(e) => this.handleEducationName(e, index)}
-                      />
-                    </label>
-                    <label className="title">
-                      Title of Study
-                      <input
-                        type="text"
-                        value={item.title}
-                        onChange={(e) => this.handleEducationTitle(e, index)}
-                      />
-                    </label>
-                    <label className="start-date">
-                      Start Date{" "}
-                      <input
-                        value={item.startDate}
-                        type="month"
-                        onChange={(e) =>
-                          this.handleEducationStartDate(e, index)
-                        }
-                      />
-                    </label>
-                    <label className="graduation-date">
-                      Graduation Date{" "}
-                      <input
-                        type="month"
-                        value={item.graduationDate}
-                        onChange={(e) =>
-                          this.handleEducationGraduationDate(e, index)
-                        }
-                      />
-                    </label>
-                    <button
-                      className="delete-entry"
-                      onClick={(e) => this.deleteEducationEntry(e, index)}
-                    >
-                      Delete Entry
-                    </button>
-                  </div>
-                );
-              })}
-              <button
-                className="add-entry"
-                onClick={this.addEducationEntry}
-              >
-                Add Entry
-              </button>
-            </div>
-            <div className="experience">
-              <h2 className="experience-title">Work Experience</h2>
-              {this.state.workExperience.map((item, index) => {
-                return (
-                  <div className="experience-entry" key={index}>
-                    <label className="name">
-                      Company Name
-                      <input
-                        type="text"
-                        value={item.companyName}
-                        onChange={(e) => this.handleWorkName(e, index)}
-                      />
-                    </label>
-                    <label className="title">
-                      Title
-                      <input
-                        type="text"
-                        value={item.title}
-                        onChange={(e) => this.handleWorkTitle(e, index)}
-                      />
-                    </label>
-                    <label className="main-tasks">
-                      Main Tasks
-                      <textarea
-                        cols="30"
-                        rows="5"
-                        value={item.mainTasks}
-                        onChange={(e) => this.handleWorkTasks(e, index)}
-                      ></textarea>
-                    </label>
-                    <label className="start-date">
-                      Start Date
-                      <input
-                        value={item.startDate}
-                        type="month"
-                        onChange={(e) =>
-                          this.handleWorkStartDate(e, index)
-                        }
-                      />
-                    </label>
-                    <label className="end-date">
-                      End Date
-                      <input
-                        type="month"
-                        value={item.endDate}
-                        onChange={(e) =>
-                          this.handleWorkEndDate(e, index)
-                        }
-                      />
-                    </label>
-                    <button
-                      className="delete-entry"
-                      onClick={(e) => this.deleteExperienceEntry(e, index)}
-                    >
-                      Delete Entry
-                    </button>
-                  </div>
-                );
-              })}
-              <button
-                className="add-entry"
-                onClick={this.addExperienceEntry}
-              >
-                Add Entry
-              </button>
-            </div>
-          </form>
-        </div>
-        <OutputInfo className="output-info" generalInfo={this.state} />
+  return (
+    <div className="App">
+      <div className="input-info">
+        <h1 className="header-title">
+          Input your info and get real-time results!
+        </h1>
+        <form className="input-form">
+          <div className="general-info">
+            <h2 className="general-info-header">General Info</h2>
+            <label className="name">
+              Name
+              <input type="text" value={name} onChange={handleName} />
+            </label>
+            <label className="title">
+              Title
+              <input type="text" value={title} onChange={handleTitle} />
+            </label>
+            <label className="phone-number">
+              Phone number{" "}
+              <input value={phoneNumber} onChange={handlePhoneNumber} />
+            </label>
+            <label className="email">
+              Email <input type="text" value={email} onChange={handleEmail} />
+            </label>
+          </div>
+          <div className="eduaction">
+            <h2 className="education-title">Education</h2>
+            {educationExperience.map((item, index) => {
+              return (
+                <div className="education-entry" key={index}>
+                  <label className="name">
+                    School Name
+                    <input
+                      type="text"
+                      value={item.schoolName}
+                      onChange={(e) => handleEducationName(e, index)}
+                    />
+                  </label>
+                  <label className="title">
+                    Title of Study
+                    <input
+                      type="text"
+                      value={item.title}
+                      onChange={(e) => handleEducationTitle(e, index)}
+                    />
+                  </label>
+                  <label className="start-date">
+                    Start Date{" "}
+                    <input
+                      value={item.startDate}
+                      type="month"
+                      onChange={(e) => handleEducationStartDate(e, index)}
+                    />
+                  </label>
+                  <label className="graduation-date">
+                    Graduation Date{" "}
+                    <input
+                      type="month"
+                      value={item.graduationDate}
+                      onChange={(e) => handleEducationGraduationDate(e, index)}
+                    />
+                  </label>
+                  <button
+                    className="delete-entry"
+                    onClick={(e) => deleteEducationEntry(e, index)}
+                  >
+                    Delete Entry
+                  </button>
+                </div>
+              );
+            })}
+            <button className="add-entry" onClick={addEducationEntry}>
+              Add Entry
+            </button>
+          </div>
+          <div className="experience">
+            <h2 className="experience-title">Work Experience</h2>
+            {workExperience.map((item, index) => {
+              return (
+                <div className="experience-entry" key={index}>
+                  <label className="name">
+                    Company Name
+                    <input
+                      type="text"
+                      value={item.companyName}
+                      onChange={(e) => handleWorkName(e, index)}
+                    />
+                  </label>
+                  <label className="title">
+                    Title
+                    <input
+                      type="text"
+                      value={item.title}
+                      onChange={(e) => handleWorkTitle(e, index)}
+                    />
+                  </label>
+                  <label className="main-tasks">
+                    Main Tasks
+                    <textarea
+                      cols="30"
+                      rows="5"
+                      value={item.mainTasks}
+                      onChange={(e) => handleWorkTasks(e, index)}
+                    ></textarea>
+                  </label>
+                  <label className="start-date">
+                    Start Date
+                    <input
+                      value={item.startDate}
+                      type="month"
+                      onChange={(e) => handleWorkStartDate(e, index)}
+                    />
+                  </label>
+                  <label className="end-date">
+                    End Date
+                    <input
+                      type="month"
+                      value={item.endDate}
+                      onChange={(e) => handleWorkEndDate(e, index)}
+                    />
+                  </label>
+                  <button
+                    className="delete-entry"
+                    onClick={(e) => deleteExperienceEntry(e, index)}
+                  >
+                    Delete Entry
+                  </button>
+                </div>
+              );
+            })}
+            <button className="add-entry" onClick={addExperienceEntry}>
+              Add Entry
+            </button>
+          </div>
+        </form>
       </div>
-    );
-  }
+      <OutputInfo
+        className="output-info"
+        generalInfo={{
+          name,
+          title,
+          phoneNumber,
+          email,
+          educationExperience,
+          workExperience,
+        }}
+      />
+    </div>
+  );
 }
 
 export default App;
